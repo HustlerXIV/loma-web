@@ -34,7 +34,7 @@ export default function AuthSyncHandler() {
           return res.json();
         })
         .then((data) => {
-          console.log("✅ Received backend JWT:", data.token);
+          console.log("Received backend JWT:", data.token);
           sessionStorage.setItem("appToken", data.token);
         })
         .catch((err) => {
@@ -44,7 +44,7 @@ export default function AuthSyncHandler() {
       return;
     }
 
-    console.log("✅ Auth in sync with token:", session.accessToken);
+    console.log("Auth in sync with token:", session.idToken);
   }, [session, status, pathname, router]);
 
   return null;

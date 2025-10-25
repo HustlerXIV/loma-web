@@ -1,6 +1,5 @@
 "use client";
 
-import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { Button, TextField, Typography, Box } from "@mui/material";
 import Image from "next/image";
@@ -8,36 +7,66 @@ import Link from "next/link";
 import DividerWithText from "@/components/ui/divider-with-text";
 import PageTitle from "@/components/ui/page-title";
 import { useModalStore } from "@/stores/modal-store";
+import { withLoader } from "@/utils/with-loader";
 
-export default function LoginModule() {
+export default function RegisterModule() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [loading, setLoading] = useState(false);
   const open = useModalStore((s) => s.open);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+
     try {
-      await signIn("credentials", {
-        email,
-        password,
-        callbackUrl: "/",
+      const res = await withLoader(
+        () =>
+          fetch("/api/backend/auth/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password, fullName }),
+          }),
+        "Saving data..."
+      );
+
+      if (!res.ok) throw new Error("Registration failed");
+
+      open({
+        type: "success",
+        title: "ลงทะเบียนสำเร็จ!",
+        description: "ลงทะเบียนสำเร็จ! โปรดเข้าสู่ระบบ",
+        onClose: () => (window.location.href = "/login"),
       });
     } catch (err) {
+      console.error(err);
+
       open({
         type: "error",
-        title: "Login Failed",
-        description: "Your email or password is incorrect. Please try again.",
+        title: "เกิดข้อผิดพลาด",
+        description: "เกิดข้อผิดพลาดในการลงทะเบียน กรุณาลองใหม่อีกครั้ง",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleGoogleLogin = () => signIn("google", { callbackUrl: "/" });
-
   return (
     <Box>
-      <PageTitle title="Welcome" desc="กรุณากรอกข้อมูลเพื่อเข้าสู่ระบบ" />
-
+      <PageTitle
+        title="Create Account"
+        desc="กรุณากรอกข้อมูลเพื่อสมัครสมาชิก"
+      />
       <form onSubmit={handleSubmit}>
+        <TextField
+          label="Full Name"
+          fullWidth
+          margin="normal"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+          required
+        />
         <TextField
           label="Email"
           fullWidth
@@ -62,15 +91,16 @@ export default function LoginModule() {
           variant="contained"
           color="primary"
           fullWidth
+          disabled={loading}
           sx={{ mt: 2 }}
         >
-          เข้าสู่ระบบ
+          {loading ? "กำลังสมัครสมาชิก..." : "สมัครสมาชิก"}
         </Button>
 
         <DividerWithText text="หรือเข้าสู่ระบบด้วย" />
 
         <div
-          onClick={handleGoogleLogin}
+          onClick={() => (window.location.href = "/login")}
           className="cursor-pointer h-14 border border-gray-400 rounded-sm flex justify-center items-center gap-2 mb-5"
         >
           <Image src="/google-logo.png" alt="Google" width={40} height={40} />
@@ -84,9 +114,9 @@ export default function LoginModule() {
           mb={3}
           color="customGray.main"
         >
-          ยังไม่มีบัญชี?{" "}
-          <Link href="/register" className="font-bold">
-            สร้างบัญชีที่นี่
+          มีบัญชีอยู่แล้ว?{" "}
+          <Link href="/login" className="font-bold">
+            เข้าสู่ระบบที่นี่
           </Link>
         </Typography>
       </form>
