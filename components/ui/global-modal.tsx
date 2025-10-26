@@ -68,6 +68,7 @@ export default function GlobalModal() {
       aria-labelledby="global-dialog-title"
       fullWidth
       maxWidth="sm"
+      disableScrollLock
     >
       <DialogTitle
         id="global-dialog-title"

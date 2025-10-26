@@ -8,6 +8,7 @@ import Link from "next/link";
 import DividerWithText from "@/components/ui/divider-with-text";
 import PageTitle from "@/components/ui/page-title";
 import { useModalStore } from "@/stores/modal-store";
+import LoginIcon from "@mui/icons-material/Login";
 
 export default function LoginModule() {
   const [email, setEmail] = useState("");
@@ -20,7 +21,7 @@ export default function LoginModule() {
       await signIn("credentials", {
         email,
         password,
-        callbackUrl: "/",
+        callbackUrl: "/my-places",
       });
     } catch (err) {
       open({
@@ -31,7 +32,8 @@ export default function LoginModule() {
     }
   };
 
-  const handleGoogleLogin = () => signIn("google", { callbackUrl: "/" });
+  const handleGoogleLogin = () =>
+    signIn("google", { callbackUrl: "/my-places" });
 
   return (
     <Box>
@@ -63,6 +65,7 @@ export default function LoginModule() {
           color="primary"
           fullWidth
           sx={{ mt: 2 }}
+          startIcon={<LoginIcon />}
         >
           เข้าสู่ระบบ
         </Button>

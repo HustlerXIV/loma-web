@@ -20,15 +20,15 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <CssBaseline />
         <GlobalModal />
         <GlobalLoader />
-        <div className="relative min-h-screen w-full bg-linear-to-r from-[#3E1997] via-[#6C3BD9] to-[#3E1997] bg-[length:200%_200%] animate-gradient">
+        <div className="relative min-h-screen flex flex-col items-center w-full bg-linear-to-r from-[#3E1997] via-[#6C3BD9] to-[#3E1997] bg-[length:200%_200%] animate-gradient">
           <div className="sticky top-0 z-0 flex flex-col items-center pt-[100px] pb-[120px]">
             <div className="text-white text-5xl font-semibold drop-shadow-xl">
               Loma
             </div>
           </div>
 
-          <div className="relative z-10 -mt-20 drop-shadow-2xl max-w-[600px] mx-auto">
-            <div className="h-5 w-[90%] mx-auto rounded-t-2xl bg-linear-to-r from-[#736EE1] to-[#938EF0]" />
+          <div className="relative z-10 -mt-20 drop-shadow-2xl max-w-[600px] w-full">
+            <div className="h-4 w-[90%] mx-auto rounded-t-2xl bg-linear-to-r from-[#736EE1] to-[#6C3BD9] animate-gradient" />
 
             <div
               className="bg-white rounded-t-2xl p-3 pt-11 min-h-[calc(100vh-120px)]"
