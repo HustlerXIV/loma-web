@@ -1,8 +1,8 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+const nextConfig: any = {
   reactStrictMode: false,
-  output: "export",
+  experimental: {
+    runtime: "edge",
+  },
 };
 
 export default nextConfig;
