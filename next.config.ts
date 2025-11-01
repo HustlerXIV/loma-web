@@ -1,8 +1,5 @@
-const nextConfig: any = {
+const nextConfig = {
   reactStrictMode: false,
-  experimental: {
-    runtime: "edge",
-  },
 };
 
 export default nextConfig;
