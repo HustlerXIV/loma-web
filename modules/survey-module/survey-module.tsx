@@ -25,12 +25,12 @@ export default function SurveyModule({
   const open = useModalStore((s) => s.open);
   const { data: session, status } = useSession();
 
-  const appToken = sessionStorage?.getItem("appToken");
-
   useEffect(() => {
     let mounted = true;
     (async () => {
       try {
+        const appToken = sessionStorage?.getItem("appToken");
+
         const res = await withLoader(
           () =>
             fetch(questionsEndpoint, {
@@ -112,6 +112,7 @@ export default function SurveyModule({
 
     try {
       setSubmitting(true);
+      const appToken = sessionStorage?.getItem("appToken");
 
       const resp = await withLoader(
         () =>

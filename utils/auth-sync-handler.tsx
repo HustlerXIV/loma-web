@@ -29,7 +29,8 @@ export default function AuthSyncHandler() {
 
     if (
       session.idToken &&
-      !sessionStorage?.getItem("appToken") &&
+      typeof window !== "undefined" &&
+      !window.sessionStorage.getItem("appToken") &&
       !syncedRef.current
     ) {
       syncedRef.current = true;
@@ -50,7 +51,8 @@ export default function AuthSyncHandler() {
           if (!res.ok) throw new Error("Google re-sync failed");
 
           const data = await res.json();
-          sessionStorage?.setItem("appToken", data.token);
+
+          window.sessionStorage.setItem("appToken", data.token);
 
           await updateSession({
             ...session,

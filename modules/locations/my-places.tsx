@@ -19,10 +19,10 @@ const MyPlacesModule = () => {
   const { data: session, status } = useSession();
   const open = useModalStore((s) => s.open);
 
-  const appToken = sessionStorage?.getItem("appToken");
-
   const fetchLocations = async () => {
     try {
+      const appToken = sessionStorage?.getItem("appToken");
+
       const res = await withLoader(
         () =>
           fetch("/api/backend/locations/", {
@@ -46,6 +46,8 @@ const MyPlacesModule = () => {
 
   const deleteLocation = async (locationId: any) => {
     try {
+      const appToken = sessionStorage?.getItem("appToken");
+
       const res = await withLoader(
         () =>
           fetch(`/api/backend/locations/${locationId}`, {
@@ -82,6 +84,7 @@ const MyPlacesModule = () => {
 
   useEffect(() => {
     if (status === "loading") return;
+    const appToken = sessionStorage?.getItem("appToken");
 
     if (!appToken) {
       console.warn("No appToken yet — waiting for sync");
