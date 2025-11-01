@@ -11,18 +11,15 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton, Tooltip } from "@mui/material";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import SurveyBanner from "../survey/survey-banner";
 
 const MyPlacesModule = () => {
   const [locations, setLocations] = useState([]);
   const { data: session, status } = useSession();
   const open = useModalStore((s) => s.open);
-  const router = useRouter();
 
-  const appToken =
-    sessionStorage.getItem("appToken") ||
-    session?.idToken ||
-    session?.accessToken;
+  const appToken = sessionStorage?.getItem("appToken");
 
   const fetchLocations = async () => {
     try {
@@ -71,16 +68,7 @@ const MyPlacesModule = () => {
   };
 
   const handleShare = (location: any) => {
-    console.log("Share:", location);
-    open({
-      type: "info",
-      title: "Share Location",
-      description: `Share link: ${location.link}`,
-    });
-  };
-
-  const handleEdit = (location: any) => {
-    router.push(`/my-places/edit/${location.id}`);
+    window.location.href = `/share-location/${location.id}`;
   };
 
   const handleDelete = (location: any) => {
@@ -89,15 +77,6 @@ const MyPlacesModule = () => {
       title: "Confirm Delete",
       description: `Are you sure you want to delete "${location.name}"?`,
       onConfirm: () => deleteLocation(location.id),
-    });
-  };
-
-  const handleCardClick = (location: any) => {
-    console.log("Card clicked:", location);
-    open({
-      type: "info",
-      title: location.name,
-      description: location.addressLine || "No address available",
     });
   };
 
@@ -114,31 +93,36 @@ const MyPlacesModule = () => {
 
   return (
     <div>
-      <PageTitle title="My Places" desc="สถานที่ของฉัน" />
+      <PageTitle
+        title="My Places"
+        desc="เลือกสถานที่ของคุณ แล้วแชร์ให้คนอื่นได้ง่าย ๆ"
+      />
 
       <div className="flex flex-col gap-4">
         {locations.map((location: any) => {
           return (
             <div
               key={location.id}
-              onClick={() => handleCardClick(location)}
+              onClick={() => handleShare(location)}
               className="border border-gray-400 p-3 rounded-md transition-all duration-200 hover:border-[#6C3BD9] hover:bg-[#F3E9FF] hover:shadow-sm cursor-pointer"
             >
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center gap-2 flex-wrap">
                 <div className="flex gap-3 items-center">
                   <FavoriteIcon
                     sx={{ color: location.isFavorite ? "#FF4545" : "#ccc" }}
                   />
                   <div className="flex flex-col">
-                    <div className="font-bold">{location.name}</div>
-                    <div className="text-gray-600 text-sm">
+                    <div className="font-bold truncate w-full max-w-[180px]">
+                      {location.name}
+                    </div>
+                    <div className="text-gray-600 text-sm truncate max-w-[300px]">
                       {location.description}
                     </div>
                   </div>
                 </div>
 
                 <div className="flex gap-1">
-                  <Tooltip title="Share">
+                  <Tooltip title="แชร์">
                     <IconButton
                       size="small"
                       onClick={(e) => {
@@ -151,12 +135,12 @@ const MyPlacesModule = () => {
                     </IconButton>
                   </Tooltip>
 
-                  <Tooltip title="Edit">
+                  <Tooltip title="แก้ไข">
                     <IconButton
                       size="small"
+                      href={`/my-places/edit/${location.id}`}
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleEdit(location);
                       }}
                       sx={{ color: "#6C3BD9" }}
                     >
@@ -164,7 +148,7 @@ const MyPlacesModule = () => {
                     </IconButton>
                   </Tooltip>
 
-                  <Tooltip title="Delete">
+                  <Tooltip title="ลบ">
                     <IconButton
                       size="small"
                       onClick={(e) => {
@@ -182,12 +166,13 @@ const MyPlacesModule = () => {
           );
         })}
 
-        <div
-          onClick={() => router.push("/my-places/create")}
+        <Link
+          href="/my-places/create"
           className="border font-bold border-gray-400 p-3 rounded-md flex justify-center items-center cursor-pointer transition-all duration-200 hover:border-[#6C3BD9] hover:bg-[#F3E9FF] hover:shadow-sm"
         >
           <AddIcon /> เพิ่มสถานที่
-        </div>
+        </Link>
+        <SurveyBanner />
       </div>
     </div>
   );

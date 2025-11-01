@@ -3,8 +3,10 @@
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="max-w-3xl mx-auto bg-white rounded-2xl p-4">
-      <h1 className="text-3xl font-bold text-[#3E1997] mb-6">Privacy Policy</h1>
+    <div className="max-w-3xl mx-auto">
+      <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent mb-6">
+        Privacy Policy
+      </h1>
 
       <p className="text-gray-700 mb-4">
         <strong>
@@ -38,7 +40,7 @@ export default function PrivacyPolicyPage() {
 
       <hr className="border-gray-200 my-8" />
 
-      <h2 className="text-2xl font-semibold text-[#3E1997] mb-4">
+      <h2 className="text-2xl font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent mb-4">
         นโยบายความเป็นส่วนตัว (Privacy Policy)
       </h2>
 

@@ -8,15 +8,23 @@ interface PageTitleProps {
 
 const PageTitle: React.FC<PageTitleProps> = ({ title, desc }) => {
   return (
-    <div>
-      <Typography variant="h5" textAlign="center" fontWeight="bold" mb={1}>
+    <div className="w-full wrap-break-word">
+      <div
+        className="
+          text-2xl md:text-3xl font-bold 
+          bg-gradient-to-r from-purple-600 to-indigo-600 
+          bg-clip-text text-transparent 
+          text-center mb-1
+        "
+      >
         {title}
-      </Typography>
+      </div>
       <Typography
         variant="body1"
         textAlign="center"
         mb={3}
         color="customGray.main"
+        style={{ wordWrap: "break-word" }}
       >
         {desc}
       </Typography>

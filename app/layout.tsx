@@ -9,7 +9,7 @@ const kanit = Kanit({
 });
 
 export const metadata: Metadata = {
-  title: "Loma",
+  title: "Song-Loma",
   description: "Share your location with safty",
 };
 

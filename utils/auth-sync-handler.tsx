@@ -11,8 +11,14 @@ export default function AuthSyncHandler() {
   const syncedRef = useRef(false);
 
   useEffect(() => {
-    if (pathname.startsWith("/login") || pathname.startsWith("/register"))
+    if (
+      pathname === "/" ||
+      pathname.startsWith("/login") ||
+      pathname.startsWith("/register") ||
+      pathname.startsWith("/privacy")
+    ) {
       return;
+    }
     if (status === "loading") return;
 
     if (status === "unauthenticated" || !session) {
@@ -23,7 +29,7 @@ export default function AuthSyncHandler() {
 
     if (
       session.idToken &&
-      !sessionStorage.getItem("appToken") &&
+      !sessionStorage?.getItem("appToken") &&
       !syncedRef.current
     ) {
       syncedRef.current = true;
@@ -44,7 +50,7 @@ export default function AuthSyncHandler() {
           if (!res.ok) throw new Error("Google re-sync failed");
 
           const data = await res.json();
-          sessionStorage.setItem("appToken", data.token);
+          sessionStorage?.setItem("appToken", data.token);
 
           await updateSession({
             ...session,

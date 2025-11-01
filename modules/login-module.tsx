@@ -74,7 +74,7 @@ export default function LoginModule() {
 
         <div
           onClick={handleGoogleLogin}
-          className="cursor-pointer h-14 border border-gray-400 rounded-sm flex justify-center items-center gap-2 mb-5"
+          className="cursor-pointer h-14 border border-gray-400 rounded-sm flex justify-center items-center gap-2 mb-5 hover:border-[#6C3BD9] hover:bg-[#F3E9FF] hover:shadow-sm"
         >
           <Image src="/google-logo.png" alt="Google" width={40} height={40} />
           <Typography fontWeight="bold" color="customGray.main">

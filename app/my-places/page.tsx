@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "Loma - My Places",
+  title: "Song-Loma - My Places",
   description: "รายการสถานที่ทั้งหมดของฉัน",
 };
 

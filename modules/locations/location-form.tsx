@@ -22,7 +22,6 @@ import PageTitle from "@/components/ui/page-title";
 import DividerWithText from "@/components/ui/divider-with-text";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import SaveIcon from "@mui/icons-material/Save";
-import { useRouter } from "next/navigation";
 
 const containerStyle = {
   width: "100%",
@@ -56,7 +55,6 @@ export default function LocationPickerForm({
   const [loading, setLoading] = useState(false);
   const open = useModalStore((s) => s.open);
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
-  const router = useRouter();
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
     libraries: ["places"],
@@ -70,7 +68,7 @@ export default function LocationPickerForm({
     const fetchLocation = async () => {
       try {
         const appToken =
-          sessionStorage.getItem("appToken") ||
+          sessionStorage?.getItem("appToken") ||
           session?.idToken ||
           session?.accessToken;
 
@@ -173,7 +171,7 @@ export default function LocationPickerForm({
 
     try {
       const appToken =
-        sessionStorage.getItem("appToken") ||
+        sessionStorage?.getItem("appToken") ||
         session?.idToken ||
         session?.accessToken;
 
@@ -334,7 +332,7 @@ export default function LocationPickerForm({
             color="primary"
             sx={{ mt: 2, height: "56px", minWidth: "120px" }}
             startIcon={<ArrowBackIosNewIcon />}
-            onClick={() => router.push("/my-places")}
+            onClick={() => (window.location.href = "/my-places")}
           >
             ย้อนกลับ
           </Button>
