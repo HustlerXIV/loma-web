@@ -118,7 +118,7 @@ const ShareLocation: React.FC<ShareLocationProps> = ({ locationId }) => {
   return (
     <div className="flex flex-col items-center gap-2">
       <PageTitle title={name} desc="แสกน QR Code เพื่อไปยัง Google Maps" />
-      <QRCode value={link} size={180} />
+      <QRCode value={link} size={300} />
 
       <Typography variant="subtitle2" className={`mt-2 font-bold text-red-600`}>
         {`อายุการใช้งาน QR Code: ${remainingTime} นาที`}
