@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { withLoader } from "@/utils/with-loader";
@@ -39,11 +41,9 @@ export default function RedirectPage() {
             : `https://www.google.com/maps?q=${data.latitude},${data.longitude}`;
 
         setManualUrl(target);
-
         window.location.href = target;
       } catch (e) {
         console.error(e);
-
         router.replace("/redirect/failed");
       }
     };

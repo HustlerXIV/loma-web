@@ -8,6 +8,7 @@ import DividerWithText from "@/components/ui/divider-with-text";
 import PageTitle from "@/components/ui/page-title";
 import { useModalStore } from "@/stores/modal-store";
 import { withLoader } from "@/utils/with-loader";
+import { signIn } from "next-auth/react";
 
 export default function RegisterModule() {
   const [email, setEmail] = useState("");
@@ -51,6 +52,9 @@ export default function RegisterModule() {
       setLoading(false);
     }
   };
+
+  const handleGoogleLogin = () =>
+    signIn("google", { callbackUrl: "/my-places" });
 
   return (
     <Box>
@@ -100,7 +104,7 @@ export default function RegisterModule() {
         <DividerWithText text="หรือเข้าสู่ระบบด้วย" />
 
         <div
-          onClick={() => (window.location.href = "/login")}
+          onClick={handleGoogleLogin}
           className="cursor-pointer h-14 border border-gray-400 rounded-sm flex justify-center items-center gap-2 mb-5"
         >
           <Image src="/google-logo.png" alt="Google" width={40} height={40} />
