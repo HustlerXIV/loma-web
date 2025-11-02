@@ -20,7 +20,10 @@ interface MainLayoutProps {
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const pathname = usePathname();
   const hideNavbar =
-    pathname === "/" || pathname === "/login" || pathname === "/register";
+    pathname === "/" ||
+    pathname === "/login" ||
+    pathname === "/register" ||
+    pathname.startsWith("/redirect");
 
   useEffect(() => {
     AOS.init({ duration: 800, once: true, easing: "ease-out-cubic" });

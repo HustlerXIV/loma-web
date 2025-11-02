@@ -15,7 +15,8 @@ export default function AuthSyncHandler() {
       pathname === "/" ||
       pathname.startsWith("/login") ||
       pathname.startsWith("/register") ||
-      pathname.startsWith("/privacy")
+      pathname.startsWith("/privacy") ||
+      pathname.startsWith("/redirect")
     ) {
       return;
     }

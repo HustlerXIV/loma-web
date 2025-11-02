@@ -37,7 +37,7 @@ const ShareLocation: React.FC<ShareLocationProps> = ({ locationId }) => {
       );
 
       const data = await res.json();
-      const newLink = `${window.location.origin}/token?=${data?.token}`;
+      const newLink = `${window.location.origin}/redirect?token=${data?.token}`;
       setName(data?.name);
       setLink(newLink);
       setToken(data?.token);
