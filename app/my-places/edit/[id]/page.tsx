@@ -2,7 +2,7 @@ import LocationPickerForm from "@/modules/locations/location-form";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Song-Loma - Edit a place",
+  title: "ส่งโลมา | แก้ไขสถานที่ของฉัน",
   description: "แก้ไขสถานที่ของฉัน",
 };
 

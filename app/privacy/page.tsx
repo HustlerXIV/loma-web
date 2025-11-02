@@ -1,5 +1,9 @@
-// app/privacy/page.tsx
-"use client";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "ส่งโลมา | นโยบายความเป็นส่วนตัว",
+  description: "นโยบายความเป็นส่วนตัว",
+};
 
 export default function PrivacyPolicyPage() {
   return (

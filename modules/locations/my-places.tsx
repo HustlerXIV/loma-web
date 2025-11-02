@@ -12,7 +12,7 @@ import { IconButton, Tooltip } from "@mui/material";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import SurveyBanner from "../survey/survey-banner";
+import SurveyBanner from "../survey-module/survey-banner";
 
 const MyPlacesModule = () => {
   const [locations, setLocations] = useState([]);

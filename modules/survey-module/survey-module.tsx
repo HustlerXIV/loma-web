@@ -1,14 +1,18 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import type { SurveyModuleProps, SurveyQuestion, AnswerPayload } from "./types";
-import { Likert5, NPS11 } from "./likert";
+import {
+  type SurveyModuleProps,
+  type SurveyQuestion,
+  type AnswerPayload,
+  AGE_CHOICES,
+} from "./types";
+import { Likert5, NPS11, SingleChoice } from "./likert";
 
 import { Button, Divider, FormLabel, TextField } from "@mui/material";
 import { withLoader } from "@/utils/with-loader";
 import { useModalStore } from "@/stores/modal-store";
 import PageTitle from "@/components/ui/page-title";
-import { useSession } from "next-auth/react";
 
 const sectionHeader =
   "text-base md:text-lg font-semibold text-gray-800 mb-2 mt-6";
@@ -23,7 +27,6 @@ export default function SurveyModule({
   const [values, setValues] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const open = useModalStore((s) => s.open);
-  const { data: session, status } = useSession();
 
   useEffect(() => {
     let mounted = true;
@@ -65,6 +68,9 @@ export default function SurveyModule({
     };
   }, [questionsEndpoint]);
 
+  const GENERAL_SECTION = "ข้อมูลทั่วไป";
+  const LAST_SECTION = "ข้อเสนอแนะ";
+
   const grouped = useMemo(() => {
     const map = new Map<string, SurveyQuestion[]>();
 
@@ -74,12 +80,18 @@ export default function SurveyModule({
     }
 
     for (const [, qs] of map) {
-      qs.sort((a, b) => b.displayOrder - a.displayOrder);
+      qs.sort((a, b) => a.displayOrder - b.displayOrder);
     }
 
-    return Array.from(map.entries()).sort(([a], [b]) =>
-      b.localeCompare(a, "th")
-    );
+    const rank = (name: string) =>
+      name === GENERAL_SECTION ? 0 : name === LAST_SECTION ? 2 : 1;
+
+    return Array.from(map.entries()).sort(([a], [b]) => {
+      const ra = rank(a);
+      const rb = rank(b);
+      if (ra !== rb) return ra - rb;
+      return a.localeCompare(b, "th");
+    });
   }, [questions]);
 
   const setField = (qid: number, v: string) =>
@@ -202,6 +214,16 @@ export default function SurveyModule({
                         minRows={3}
                         required={q.isRequired}
                         fullWidth
+                      />
+                    )}
+
+                    {q.questionType === "single_choice" && (
+                      <SingleChoice
+                        name={`q-${q.id}`}
+                        value={values[String(q.id)]}
+                        onChange={(v) => setField(q.id, v)}
+                        required={q.isRequired}
+                        choices={AGE_CHOICES}
                       />
                     )}
                   </div>

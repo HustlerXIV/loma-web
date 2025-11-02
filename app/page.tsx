@@ -10,17 +10,17 @@ export default function HomePage() {
   const features = [
     {
       title: "One-Time Token",
-      desc: "Each QR code generates a short-lived token that cannot be reused — ensuring your privacy and control.",
+      desc: "แต่ละ QR Code จะสร้างโทเคนแบบใช้ครั้งเดียวที่มีอายุสั้น ไม่สามารถนำกลับมาใช้ใหม่ได้ เพื่อความเป็นส่วนตัวและการควบคุมของคุณอย่างแท้จริง",
       icon: <LockIcon sx={{ fontSize: 50, color: "#6B46C1" }} />,
     },
     {
       title: "15-Minute Expiry",
-      desc: "Tokens expire automatically to prevent misuse or unwanted tracking after the session.",
+      desc: "โทเคนจะหมดอายุโดยอัตโนมัติภายใน 15 นาที เพื่อป้องกันการนำไปใช้ในทางที่ผิดหรือการติดตามโดยไม่ได้รับอนุญาตหลังจากจบการใช้งาน",
       icon: <AccessTimeIcon sx={{ fontSize: 50, color: "#6B46C1" }} />,
     },
     {
       title: "Seamless Sharing",
-      desc: "No need to copy links or contacts. Just scan the QR to open Google Maps instantly.",
+      desc: "ไม่ต้องคัดลอกลิงก์หรือบันทึกเบอร์โทร เพียงสแกน QR ก็สามารถเปิดแผนที่ Google Maps ได้ทันที",
       icon: <ShareLocationIcon sx={{ fontSize: 50, color: "#6B46C1" }} />,
     },
   ];
@@ -43,9 +43,9 @@ export default function HomePage() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.8 }}
         >
-          Share your location securely and easily — each QR code expires in 15
-          minutes and can only be used once. Designed for simplicity, privacy,
-          and real-world convenience.
+          แชร์โลเคชันของคุณอย่างปลอดภัยและง่ายดาย แต่ละ QR Code จะหมดอายุภายใน
+          15 นาที และสามารถใช้ได้เพียงครั้งเดียว ออกแบบมาเพื่อความเรียบง่าย
+          ความเป็นส่วนตัว และความสะดวกในการใช้งานจริง
         </motion.p>
 
         <motion.div
@@ -57,7 +57,7 @@ export default function HomePage() {
             href="/login"
             className="px-6 py-3 bg-purple-600 text-white rounded-full shadow hover:bg-indigo-700 transition-colors"
           >
-            Get Started
+            เริ่มต้นใช้งาน
           </Link>
         </motion.div>
       </section>
@@ -75,6 +75,10 @@ export default function HomePage() {
           </motion.div>
         ))}
       </section>
+
+      <p className="text-gray-500 italic text-center">
+        Project Developer: Napat Theeranitichai
+      </p>
     </div>
   );
 }

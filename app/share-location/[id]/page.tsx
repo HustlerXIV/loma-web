@@ -2,7 +2,7 @@ import ShareLocation from "@/modules/locations/share-location";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Song-Loma - Share a location",
+  title: "ส่งโลมา | แบ่งปันสถานที่ของฉัน",
   description: "แบ่งปันสถานที่ของฉัน",
 };
 

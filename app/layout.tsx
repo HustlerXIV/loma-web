@@ -9,8 +9,9 @@ const kanit = Kanit({
 });
 
 export const metadata: Metadata = {
-  title: "Song-Loma",
-  description: "Share your location with safty",
+  title: "ส่งโลมา | แชร์โลเคชันแบบใช้ครั้งเดียว",
+  description:
+    "แชร์โลเคชันของคุณอย่างปลอดภัยและง่ายดาย ด้วย QR Code ที่หมดอายุภายใน 15 นาที เพื่อความเป็นส่วนตัวและการควบคุมของคุณ",
 };
 
 export default function RootLayout({

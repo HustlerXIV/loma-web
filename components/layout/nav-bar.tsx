@@ -5,7 +5,6 @@ import Link from "next/link";
 import {
   Box,
   IconButton,
-  Typography,
   Fade,
   List,
   ListItem,
@@ -37,6 +36,7 @@ export default function Navbar() {
           left: { xs: 8, md: 0 },
           zIndex: 1300,
         }}
+        data-aos="fade-down"
       >
         <IconButton
           onClick={toggleMenu}

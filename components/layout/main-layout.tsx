@@ -11,18 +11,19 @@ import GlobalModal from "../ui/global-modal";
 import GlobalLoader from "../ui/global-loader";
 import Navbar from "./nav-bar";
 import Footer from "./footer";
+import { usePathname } from "next/navigation";
 
 interface MainLayoutProps {
   children: React.ReactNode;
 }
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+  const pathname = usePathname();
+  const hideNavbar =
+    pathname === "/" || pathname === "/login" || pathname === "/register";
+
   useEffect(() => {
-    AOS.init({
-      duration: 800,
-      once: true,
-      easing: "ease-out-cubic",
-    });
+    AOS.init({ duration: 800, once: true, easing: "ease-out-cubic" });
   }, []);
 
   return (
@@ -35,7 +36,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
         <div className="relative min-h-screen flex flex-col items-center w-full bg-linear-to-r from-[#3E1997] via-[#6C3BD9] to-[#3E1997] bg-[length:200%_200%] animate-gradient">
           <div className="max-w-[600px] w-full relative">
-            <Navbar />
+            {/* render only when not /, /login, /register */}
+            {!hideNavbar && <Navbar />}
+
             <div
               data-aos="fade-down"
               className="sticky top-0 z-0 flex flex-col items-center pt-[100px] pb-[120px]"

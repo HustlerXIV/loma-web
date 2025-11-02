@@ -7,6 +7,7 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
+import { SurveyChoice } from "./types";
 
 export function Likert5({
   name,
@@ -85,6 +86,44 @@ export function NPS11({
       </RadioGroup>
       {required && !value && (
         <FormHelperText error>กรุณาเลือกคะแนน</FormHelperText>
+      )}
+    </FormControl>
+  );
+}
+
+export function SingleChoice({
+  name,
+  value,
+  onChange,
+  required,
+  choices,
+}: {
+  name: string;
+  value?: string;
+  onChange: (v: string) => void;
+  required?: boolean;
+  choices: SurveyChoice[];
+}) {
+  return (
+    <FormControl required={required}>
+      <RadioGroup
+        name={name}
+        value={value ?? ""}
+        onChange={(_, v) => onChange(v)}
+        className="grid gap-2 md:grid-cols-2"
+      >
+        {choices.map((c) => (
+          <FormControlLabel
+            key={c.value}
+            value={c.value}
+            control={<Radio size="small" />}
+            label={c.label}
+            className="m-0"
+          />
+        ))}
+      </RadioGroup>
+      {required && !value && (
+        <FormHelperText error>กรุณาเลือกคำตอบ</FormHelperText>
       )}
     </FormControl>
   );
