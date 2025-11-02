@@ -62,7 +62,7 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      <section className="grid md:grid-cols-3 gap-2 max-w-6xl mx-auto pb-20">
+      <section className="grid md:grid-cols-3 gap-4 md:gap-2 max-w-6xl mx-auto pb-20">
         {features.map((f) => (
           <motion.div
             key={f.title}

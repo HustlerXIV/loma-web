@@ -48,6 +48,7 @@ export default function LoginModule() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          variant="filled"
         />
         <TextField
           label="Password"
@@ -57,6 +58,7 @@ export default function LoginModule() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          variant="filled"
         />
 
         <Button
@@ -78,7 +80,7 @@ export default function LoginModule() {
         >
           <Image src="/google-logo.png" alt="Google" width={40} height={40} />
           <Typography fontWeight="bold" color="customGray.main">
-            Google
+            เข้าสู่ระบบด้วย Google
           </Typography>
         </div>
         <Typography

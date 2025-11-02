@@ -70,6 +70,7 @@ export default function RegisterModule() {
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
           required
+          variant="filled"
         />
         <TextField
           label="Email"
@@ -79,6 +80,7 @@ export default function RegisterModule() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          variant="filled"
         />
         <TextField
           label="Password"
@@ -88,6 +90,7 @@ export default function RegisterModule() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          variant="filled"
         />
 
         <Button
@@ -109,7 +112,7 @@ export default function RegisterModule() {
         >
           <Image src="/google-logo.png" alt="Google" width={40} height={40} />
           <Typography fontWeight="bold" color="customGray.main">
-            Google
+            เข้าสู่ระบบด้วย Google
           </Typography>
         </div>
         <Typography

@@ -258,6 +258,7 @@ export default function LocationPickerForm({
           onChange={handleChange}
           fullWidth
           required
+          variant="filled"
         />
         <TextField
           label="คำอธิบายสั้นๆ"
@@ -267,6 +268,7 @@ export default function LocationPickerForm({
           fullWidth
           multiline
           rows={3}
+          variant="filled"
         />
       </Box>
       <DividerWithText text="รายละเอียดสถานที่" />
@@ -276,13 +278,13 @@ export default function LocationPickerForm({
       >
         <TextField
           fullWidth
-          placeholder="ค้นหาสถานที่"
-          variant="outlined"
+          label="ค้นหาสถานที่"
           value={form.addressLine}
           onChange={(e) =>
             setForm((f) => ({ ...f, addressLine: e.target.value }))
           }
           sx={{ mb: 2 }}
+          variant="filled"
         />
       </Autocomplete>
 
@@ -302,18 +304,21 @@ export default function LocationPickerForm({
           value={loading ? "Loading..." : form.addressLine}
           onChange={handleChange}
           fullWidth
+          variant="filled"
         />
         <TextField
           label="Latitude"
           value={form.latitude}
           InputProps={{ readOnly: true }}
           fullWidth
+          variant="filled"
         />
         <TextField
           label="Longitude"
           value={form.longitude}
           InputProps={{ readOnly: true }}
           fullWidth
+          variant="filled"
         />
         <FormControlLabel
           control={

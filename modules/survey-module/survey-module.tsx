@@ -214,6 +214,7 @@ export default function SurveyModule({
                         minRows={3}
                         required={q.isRequired}
                         fullWidth
+                        variant="filled"
                       />
                     )}
 

@@ -141,7 +141,7 @@ const ShareLocation: React.FC<ShareLocationProps> = ({ locationId }) => {
           variant="contained"
           size="small"
         >
-          Revoke Token
+          ยกเลิก QR Code
         </Button>
       </div>
     </div>
