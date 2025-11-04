@@ -27,9 +27,10 @@ export type SurveyModuleProps = {
 };
 
 export const AGE_CHOICES: SurveyChoice[] = [
-  { value: "20-29", label: "20-29 ปี" },
-  { value: "30-39", label: "30-39 ปี" },
-  { value: "40-49", label: "40-49 ปี" },
-  { value: "50-60", label: "50-60 ปี" },
-  { value: "61+", label: "มากกว่า 61 ปี" },
-];
+  { value: "<20", label: "ต่ำกว่า 20 ปี" },
+  { value: "20-29", label: "20–29 ปี" },
+  { value: "30-39", label: "30–39 ปี" },
+  { value: "40-49", label: "40–49 ปี" },
+  { value: "50-59", label: "50–59 ปี" },
+  { value: "60+", label: "60 ปีขึ้นไป" },
+] as const;
