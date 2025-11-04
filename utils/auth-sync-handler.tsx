@@ -1,74 +1,44 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 export default function AuthSyncHandler() {
-  const { data: session, status, update: updateSession } = useSession();
+  const { data: session, status } = useSession();
   const pathname = usePathname();
   const router = useRouter();
-  const syncedRef = useRef(false);
+  const wroteRef = useRef(false);
 
   useEffect(() => {
     if (
       pathname === "/" ||
-      pathname.startsWith("/login") ||
-      pathname.startsWith("/register") ||
-      pathname.startsWith("/privacy") ||
-      pathname.startsWith("/redirect")
+      pathname?.startsWith("/login") ||
+      pathname?.startsWith("/register") ||
+      pathname?.startsWith("/privacy") ||
+      pathname?.startsWith("/redirect")
     ) {
       return;
     }
     if (status === "loading") return;
 
     if (status === "unauthenticated" || !session) {
-      console.warn("No valid session or token — redirecting to login");
+      if (typeof window !== "undefined") {
+        window.sessionStorage.removeItem("appToken");
+      }
       router.replace("/login");
       return;
     }
 
-    if (
-      session.idToken &&
-      typeof window !== "undefined" &&
-      !window.sessionStorage.getItem("appToken") &&
-      !syncedRef.current
-    ) {
-      syncedRef.current = true;
-      console.log("🔁 Google user detected — syncing with backend...");
-
-      (async () => {
-        try {
-          const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/google-login`,
-            {
-              method: "POST",
-              headers: {
-                Authorization: `Bearer ${session.idToken}`,
-              },
-            }
-          );
-
-          if (!res.ok) throw new Error("Google re-sync failed");
-
-          const data = await res.json();
-
-          window.sessionStorage.setItem("appToken", data.token);
-
-          await updateSession({
-            ...session,
-            idToken: data.token,
-            accessToken: data.token,
-          });
-        } catch (err) {
-          console.error("Google sync failed:", err);
-          await signOut({ callbackUrl: "/login" });
-        }
-      })();
-
-      return;
+    const appToken = (session as any).accessToken as string | undefined;
+    if (typeof window !== "undefined" && appToken) {
+      const current = window.sessionStorage.getItem("appToken");
+      if (current !== appToken || !wroteRef.current) {
+        window.sessionStorage.setItem("appToken", appToken);
+        wroteRef.current = true;
+      }
     }
-  }, [session, status, pathname, router, updateSession]);
+  }, [session, status, pathname, router]);
 
   return null;
 }

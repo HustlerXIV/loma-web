@@ -12,6 +12,7 @@ import GlobalLoader from "../ui/global-loader";
 import Navbar from "./nav-bar";
 import Footer from "./footer";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -39,16 +40,18 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
         <div className="relative min-h-screen flex flex-col items-center w-full bg-linear-to-r from-[#3E1997] via-[#6C3BD9] to-[#3E1997] bg-[length:200%_200%] animate-gradient">
           <div className="max-w-[600px] w-full relative">
-            {/* render only when not /, /login, /register */}
             {!hideNavbar && <Navbar />}
 
             <div
               data-aos="fade-down"
-              className="sticky top-0 z-0 flex flex-col items-center pt-[100px] pb-[120px]"
+              className="sticky top-0 z-0 flex flex-col items-center pt-[80px] md:pt-[100px] pb-[120px]"
             >
-              <div className="text-white text-5xl font-semibold drop-shadow-xl">
+              <Link
+                href="/"
+                className="text-white text-5xl font-semibold drop-shadow-xl"
+              >
                 Song-Loma
-              </div>
+              </Link>
             </div>
 
             <div

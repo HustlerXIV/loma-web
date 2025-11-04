@@ -9,14 +9,17 @@ import DividerWithText from "@/components/ui/divider-with-text";
 import PageTitle from "@/components/ui/page-title";
 import { useModalStore } from "@/stores/modal-store";
 import LoginIcon from "@mui/icons-material/Login";
+import { useLoaderStore } from "@/stores/loader-store";
 
 export default function LoginModule() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const open = useModalStore((s) => s.open);
+  const { show, hide } = useLoaderStore();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    show();
     try {
       await signIn("credentials", {
         email,
@@ -29,6 +32,8 @@ export default function LoginModule() {
         title: "Login Failed",
         description: "Your email or password is incorrect. Please try again.",
       });
+    } finally {
+      hide();
     }
   };
 

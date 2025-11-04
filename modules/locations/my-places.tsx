@@ -77,7 +77,7 @@ const MyPlacesModule = () => {
     open({
       type: "warning",
       title: "Confirm Delete",
-      description: `Are you sure you want to delete "${location.name}"?`,
+      description: `คุณต้องการลบ "${location.name}" หรือไม่?`,
       onConfirm: () => deleteLocation(location.id),
     });
   };
