@@ -1,4 +1,9 @@
-export type QuestionType = "likert_5" | "nps_11" | "text" | "single_choice";
+export type QuestionType =
+  | "likert_5"
+  | "nps_11"
+  | "text"
+  | "single_choice"
+  | "unique_usage";
 
 export type SurveyChoice = { value: string; label: string };
 

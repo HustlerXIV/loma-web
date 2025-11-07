@@ -227,6 +227,21 @@ export default function SurveyModule({
                         choices={AGE_CHOICES}
                       />
                     )}
+
+                    {q.questionType === "unique_usage" && (
+                      <SingleChoice
+                        name={`q-${q.id}`}
+                        value={values[String(q.id)]}
+                        onChange={(v) => setField(q.id, v)}
+                        required={q.isRequired}
+                        choices={[
+                          { value: "บ่อยครั้ง", label: "บ่อยครั้ง" },
+                          { value: "บางครั้ง", label: "บางครั้ง" },
+                          { value: "แทบไม่เคย", label: "แทบไม่เคย" },
+                          { value: "ไม่เคยเลย", label: "ไม่เคยเลย" },
+                        ]}
+                      />
+                    )}
                   </div>
                 </div>
               ))}
