@@ -25,9 +25,8 @@ export function openInSystemBrowser() {
     type: "info",
     title: "เปิดใน Safari / Chrome เพื่อเข้าสู่ระบบด้วย Google",
     description:
-      "คุณกำลังใช้งานผ่านเบราว์เซอร์ภายในแอป (เช่น LINE) ซึ่ง Google ไม่อนุญาตให้ลงชื่อเข้าใช้เพื่อความปลอดภัย\n" +
-      "หากต้องการ คุณสามารถคัดลอกลิงก์นี้แล้ววางใน Safari / Chrome :\n" +
-      url,
+      "คุณกำลังใช้งานผ่านเบราว์เซอร์ภายในแอป ซึ่ง Google ไม่อนุญาตให้ลงชื่อเข้าใช้เพื่อความปลอดภัย\n" +
+      "คุณสามารถสร้างบัญชีของแอพเพื่อใช้งาน หรือ คุณสามารถเปิดใช้งานผ่าน Safari / Chrome ได้",
     onConfirm: async () => {
       try {
         await navigator.clipboard?.writeText(url);
