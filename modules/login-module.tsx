@@ -10,6 +10,7 @@ import PageTitle from "@/components/ui/page-title";
 import { useModalStore } from "@/stores/modal-store";
 import LoginIcon from "@mui/icons-material/Login";
 import { useLoaderStore } from "@/stores/loader-store";
+import { isInAppBrowser, openInSystemBrowser } from "@/utils/webview-handler";
 
 export default function LoginModule() {
   const [email, setEmail] = useState("");
@@ -18,6 +19,10 @@ export default function LoginModule() {
   const { show, hide } = useLoaderStore();
 
   const handleSubmit = async (e: React.FormEvent) => {
+    if (isInAppBrowser()) {
+      openInSystemBrowser();
+      return;
+    }
     e.preventDefault();
     show();
     try {
