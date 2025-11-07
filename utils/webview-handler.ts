@@ -1,3 +1,5 @@
+import { useModalStore } from "@/stores/modal-store";
+
 export function isInAppBrowser() {
   if (typeof navigator === "undefined") return false;
   const ua = navigator.userAgent || "";
@@ -6,20 +8,31 @@ export function isInAppBrowser() {
 
 export function openInSystemBrowser() {
   const url = `https://${location.host}${location.pathname}${location.search}`;
-  const isAndroid = /Android/i.test(navigator.userAgent);
+  const ua = navigator.userAgent || "";
+  const isAndroid = /Android/i.test(ua);
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
 
   if (isAndroid) {
-    // Open Chrome via Android intent (falls back to the same https URL)
-    const intent = `intent://${location.host}${location.pathname}${
-      location.search
-    }#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=${encodeURIComponent(
-      url
-    )};end`;
+    const intent =
+      `intent://${location.host}${location.pathname}${location.search}` +
+      `#Intent;scheme=https;package=com.android.chrome;` +
+      `S.browser_fallback_url=${encodeURIComponent(url)};end`;
     location.href = intent;
-  } else {
-    alert(
-      "To continue with Google Sign-In, tap ••• and choose ‘Open in Safari’."
-    );
-    if (navigator.clipboard) navigator.clipboard.writeText(url);
+    return;
   }
+
+  useModalStore.getState().open({
+    type: "info",
+    title: "เปิดใน Safari / Chrome เพื่อเข้าสู่ระบบด้วย Google",
+    description:
+      "คุณกำลังใช้งานผ่านเบราว์เซอร์ภายในแอป (เช่น LINE) ซึ่ง Google ไม่อนุญาตให้ลงชื่อเข้าใช้เพื่อความปลอดภัย\n" +
+      "หากต้องการ คุณสามารถคัดลอกลิงก์นี้แล้ววางใน Safari / Chrome :\n" +
+      url,
+    onConfirm: async () => {
+      try {
+        await navigator.clipboard?.writeText(url);
+      } catch {}
+    },
+    onClose: () => {},
+  });
 }

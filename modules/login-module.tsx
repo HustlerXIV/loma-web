@@ -19,10 +19,6 @@ export default function LoginModule() {
   const { show, hide } = useLoaderStore();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    if (isInAppBrowser()) {
-      openInSystemBrowser();
-      return;
-    }
     e.preventDefault();
     show();
     try {
@@ -42,8 +38,13 @@ export default function LoginModule() {
     }
   };
 
-  const handleGoogleLogin = () =>
+  const handleGoogleLogin = () => {
+    if (isInAppBrowser()) {
+      openInSystemBrowser();
+      return;
+    }
     signIn("google", { callbackUrl: "/my-places" });
+  };
 
   return (
     <Box>
