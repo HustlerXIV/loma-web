@@ -147,6 +147,7 @@ export default function SurveyModule({
         type: "success",
         title: "ส่งแบบประเมินเรียบร้อย",
         description: "ส่งแบบประเมินเรียบร้อย ขอบคุณสำหรับคำตอบ",
+        onClose: () => (window.location.href = "/my-places"),
       });
       onSubmitted?.(true);
       setValues({});
