@@ -95,6 +95,19 @@ export default function LoginModule() {
           </Typography>
         </div>
         <Typography
+          variant="caption"
+          display="block"
+          textAlign="center"
+          mb={2}
+          color="customGray.main"
+        >
+          การเข้าสู่ระบบถือว่าท่านรับทราบ{" "}
+          <Link href="/privacy" className="font-bold underline">
+            นโยบายคุ้มครองข้อมูลส่วนบุคคล
+          </Link>{" "}
+          ของระบบ
+        </Typography>
+        <Typography
           variant="body1"
           textAlign="center"
           mb={3}

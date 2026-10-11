@@ -13,6 +13,7 @@ import { Button, Divider, FormLabel, TextField } from "@mui/material";
 import { withLoader } from "@/utils/with-loader";
 import { useModalStore } from "@/stores/modal-store";
 import PageTitle from "@/components/ui/page-title";
+import PrivacyConsentCheckbox from "@/components/ui/privacy-consent-checkbox";
 
 const sectionHeader =
   "text-base md:text-lg font-semibold text-gray-800 mb-2 mt-6";
@@ -26,6 +27,7 @@ export default function SurveyModule({
   const [questions, setQuestions] = useState<SurveyQuestion[]>([]);
   const [values, setValues] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [researchConsent, setResearchConsent] = useState(false);
   const open = useModalStore((s) => s.open);
 
   useEffect(() => {
@@ -113,6 +115,15 @@ export default function SurveyModule({
   };
 
   const handleSubmit = async () => {
+    if (!researchConsent) {
+      open({
+        type: "error",
+        title: "กรุณาให้ความยินยอม",
+        description:
+          "กรุณาทำเครื่องหมายยินยอมให้ใช้คำตอบเพื่อการวิจัยก่อนส่งแบบประเมิน",
+      });
+      return;
+    }
     if (!validateRequired()) return;
 
     const payload: AnswerPayload = {
@@ -250,6 +261,20 @@ export default function SurveyModule({
           </div>
         ))}
 
+        <div className="rounded-lg p-3 md:p-4 bg-indigo-50 mt-6">
+          <p className="text-sm text-gray-800 mb-1">
+            คำตอบของท่านจะถูกนำไปวิเคราะห์ในภาพรวมโดยไม่ระบุตัวตน
+            เพื่อประกอบการค้นคว้าอิสระและการเผยแพร่ผลงานทางวิชาการ
+            ท่านสามารถถอนความยินยอมได้ทุกเมื่อตามช่องทางในนโยบายคุ้มครองข้อมูลส่วนบุคคล
+          </p>
+          <PrivacyConsentCheckbox
+            name="researchConsent"
+            checked={researchConsent}
+            onChange={setResearchConsent}
+            label="ข้าพเจ้ายินยอมให้นำคำตอบไปใช้เพื่อการวิจัยตาม"
+          />
+        </div>
+
         <div className="flex justify-end gap-3 pt-4">
           <Button
             variant="outlined"
@@ -261,7 +286,7 @@ export default function SurveyModule({
           <Button
             variant="contained"
             onClick={handleSubmit}
-            disabled={submitting}
+            disabled={submitting || !researchConsent}
           >
             {submitting ? "กำลังส่ง..." : "ส่งคำตอบ"}
           </Button>

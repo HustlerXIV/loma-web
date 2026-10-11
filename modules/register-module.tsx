@@ -9,16 +9,31 @@ import PageTitle from "@/components/ui/page-title";
 import { useModalStore } from "@/stores/modal-store";
 import { withLoader } from "@/utils/with-loader";
 import { signIn } from "next-auth/react";
+import PrivacyConsentCheckbox from "@/components/ui/privacy-consent-checkbox";
+import { PRIVACY_POLICY_VERSION } from "@/utils/privacy-policy";
 
 export default function RegisterModule() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [privacyConsent, setPrivacyConsent] = useState(false);
   const open = useModalStore((s) => s.open);
+
+  const requireConsent = () => {
+    if (privacyConsent) return true;
+    open({
+      type: "error",
+      title: "กรุณายอมรับนโยบายคุ้มครองข้อมูลส่วนบุคคล",
+      description:
+        "กรุณาอ่านและทำเครื่องหมายยอมรับนโยบายคุ้มครองข้อมูลส่วนบุคคลก่อนสมัครสมาชิก",
+    });
+    return false;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!requireConsent()) return;
     setLoading(true);
 
     try {
@@ -27,7 +42,15 @@ export default function RegisterModule() {
           fetch("/api/backend/auth/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password, fullName }),
+            body: JSON.stringify({
+              email,
+              password,
+              fullName,
+              // PDPA consent record (ignored by backends that do not store it)
+              privacyConsent: true,
+              privacyPolicyVersion: PRIVACY_POLICY_VERSION,
+              privacyConsentAt: new Date().toISOString(),
+            }),
           }),
         "Saving data..."
       );
@@ -53,8 +76,21 @@ export default function RegisterModule() {
     }
   };
 
-  const handleGoogleLogin = () =>
+  const handleGoogleLogin = () => {
+    if (!requireConsent()) return;
+    try {
+      sessionStorage.setItem(
+        "privacyConsent",
+        JSON.stringify({
+          version: PRIVACY_POLICY_VERSION,
+          at: new Date().toISOString(),
+        })
+      );
+    } catch {
+      /* ignore storage errors */
+    }
     signIn("google", { callbackUrl: "/my-places" });
+  };
 
   return (
     <Box>
@@ -93,12 +129,17 @@ export default function RegisterModule() {
           variant="filled"
         />
 
+        <PrivacyConsentCheckbox
+          checked={privacyConsent}
+          onChange={setPrivacyConsent}
+        />
+
         <Button
           type="submit"
           variant="contained"
           color="primary"
           fullWidth
-          disabled={loading}
+          disabled={loading || !privacyConsent}
           sx={{ mt: 2 }}
         >
           {loading ? "กำลังสมัครสมาชิก..." : "สมัครสมาชิก"}
@@ -108,7 +149,14 @@ export default function RegisterModule() {
 
         <div
           onClick={handleGoogleLogin}
-          className="cursor-pointer h-14 border border-gray-400 rounded-sm flex justify-center items-center gap-2 mb-5"
+          role="button"
+          aria-disabled={!privacyConsent}
+          className={
+            "h-14 border border-gray-400 rounded-sm flex justify-center items-center gap-2 mb-5 " +
+            (privacyConsent
+              ? "cursor-pointer"
+              : "cursor-not-allowed opacity-50")
+          }
         >
           <Image src="/google-logo.png" alt="Google" width={40} height={40} />
           <Typography fontWeight="bold" color="customGray.main">
